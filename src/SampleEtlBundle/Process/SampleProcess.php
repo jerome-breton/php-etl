@@ -7,12 +7,13 @@
  */
 
 namespace SampleEtlBundle\Process;
+
 use EtlBundle\Process\ProcessAbstract;
 
 class SampleProcess extends ProcessAbstract
 {
     protected $_name = 'Sample Process';
-    
+
     public function extract()
     {
         return 10;
@@ -23,7 +24,8 @@ class SampleProcess extends ProcessAbstract
         return 10;
     }
 
-    public function load(){
+    public function load()
+    {
         return 10;
     }
 }

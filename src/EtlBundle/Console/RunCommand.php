@@ -2,7 +2,6 @@
 
 namespace EtlBundle\Console;
 
-use Psr\Log\LogLevel;
 use SampleEtlBundle\Process\SampleProcess;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -28,8 +27,7 @@ class RunCommand extends Command
                 'y',
                 InputOption::VALUE_NONE,
                 'If set, the task will yell in uppercase letters'
-            )
-        ;
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
