@@ -1,0 +1,5 @@
+services:
+    sample_etl_bundle.process:
+        class: \Swift_SendmailTransport
+        tags:
+            -  { name: jbreton_php_etl.process }

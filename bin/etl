@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+// application.php
+
+require __DIR__.'/../vendor/autoload.php';
+
+use EtlBundle\Console\OutputFormatter;
+use EtlBundle\Console\RunCommand;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Output\ConsoleOutput;
+
+$application = new Application('PHP ETL');
+$application->add(new RunCommand());
+
+$output = new ConsoleOutput(ConsoleOutput::VERBOSITY_VERBOSE, null, new OutputFormatter());
+
+$application->run(null, $output);

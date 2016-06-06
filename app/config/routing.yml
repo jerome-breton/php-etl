@@ -1,0 +1,13 @@
+sample_etl:
+    resource: "@SampleEtlBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+etl:
+    resource: "@EtlBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
