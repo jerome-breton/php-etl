@@ -12,8 +12,6 @@ use EtlBundle\Process\ProcessAbstract;
 
 class SampleProcess extends ProcessAbstract
 {
-    protected $_name = 'Sample Process';
-
     private $sampleElements = [];
     private $sampleSubElements = [];
 

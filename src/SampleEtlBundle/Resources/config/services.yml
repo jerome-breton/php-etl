@@ -1,5 +1,7 @@
 services:
-    sample_etl_bundle.process:
+    sample_etl_bundle_process:
         class: SampleEtlBundle\Process\SampleProcess
+        arguments: ['@logger']
         tags:
+            -  { name: monolog.logger, channel: sampleEtlBundleProcess }
             -  { name: jbreton_php_etl.process }
