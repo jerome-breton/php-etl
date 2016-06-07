@@ -1,7 +1,8 @@
 <?php
 
-namespace EtlBundle\Console;
+namespace EtlBundle\Command\Process;
 
+use EtlBundle\Console\OutputFormatter;
 use SampleEtlBundle\Process\SampleProcess;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,7 +16,7 @@ class RunCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('process:run')
+            ->setName('php-etl:process:run')
             ->setDescription('Launch a process')
             ->addArgument(
                 'processName',

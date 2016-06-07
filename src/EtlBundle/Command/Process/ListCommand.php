@@ -1,6 +1,6 @@
 <?php
 
-namespace EtlBundle\Console;
+namespace EtlBundle\Command\Process;
 
 use EtlBundle\Container\ProcessLister;
 use Symfony\Component\Console\Command\Command;
@@ -12,7 +12,7 @@ class ListCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('process:list')
+            ->setName('php-etl:process:list')
             ->setDescription('List available processes');
     }
 
