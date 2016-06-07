@@ -14,18 +14,60 @@ class SampleProcess extends ProcessAbstract
 {
     protected $_name = 'Sample Process';
 
+    private $sampleElements = [];
+    private $sampleSubElements = [];
+
     public function extract()
     {
-        return 10;
+        $c = rand(10, 100);
+        for ($i = 0; $i <= $c; $i++) {
+            $e = new \stdClass();
+            $e->id = $i;
+            $e->data = rand(1, 1000);
+            $this->sampleElements[] = $e;
+        }
+        return count($this->sampleElements);
     }
 
     public function transform()
     {
-        return 10;
+        $j = 0;
+        foreach ($this->sampleElements as $e) {
+            $c = rand(1, 10);
+            for ($i = 0; $i <= $c; $i++) {
+                $sub = new \stdClass();
+                $sub->id = $j++;
+                $sub->parent = $e->id;
+                $sub->data = $e->data . '-' . rand(1, 1000);
+                $this->sampleSubElements[] = $sub;
+            }
+        }
+        return count($this->sampleElements) + count($this->sampleSubElements);
     }
 
     public function load()
     {
-        return 10;
+        $i = 0;
+        $fp = fopen('sampleOutput.csv', 'w');
+        fputcsv($fp, ['id', 'data']);
+
+        foreach ($this->sampleElements as $e) {
+            $len = fputcsv($fp, [$e->id, $e->data]);
+            if ($len !== false) {
+                $i++;
+            }
+        }
+
+        $fp = fopen('sampleSubOutput.csv', 'w');
+        fputcsv($fp, ['id', 'parent', 'data']);
+
+        foreach ($this->sampleSubElements as $e) {
+            $len = fputcsv($fp, [$e->id, $e->parent, $e->data]);
+            if ($len !== false) {
+                $i++;
+            }
+        }
+
+        return $i;
     }
 }
