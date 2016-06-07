@@ -2,12 +2,11 @@
 
 namespace EtlBundle\Command\Process;
 
-use EtlBundle\Container\ProcessLister;
-use Symfony\Component\Console\Command\Command;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ListCommand extends Command
+class ListCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
@@ -18,7 +17,7 @@ class ListCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $list = new ProcessLister();
+        $list = $this->getContainer()->get('jbreton_php_etl.process_lister');
         $list->getProcesses();
         return 0;
     }
