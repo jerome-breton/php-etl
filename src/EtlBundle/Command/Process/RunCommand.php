@@ -2,13 +2,10 @@
 
 namespace EtlBundle\Command\Process;
 
-use EtlBundle\Console\OutputFormatter;
-use SampleEtlBundle\Process\SampleProcess;
+use EtlBundle\Container\ProcessLister;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Logger\ConsoleLogger;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class RunCommand extends ContainerAwareCommand
@@ -27,15 +24,10 @@ class RunCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $formatter = new OutputFormatter();
-        $output->setFormatter($formatter);
+        /** @var ProcessLister $list */
+        $list = $this->getContainer()->get('jbreton_php_etl.process_lister');
+        $process = $list->getProcess($input->getArgument('processName'));
 
-        if ($output->getVerbosity() == ConsoleOutput::VERBOSITY_NORMAL) {
-            $output->setVerbosity(ConsoleOutput::VERBOSITY_VERBOSE);
-        }
-
-        $process = new SampleProcess(new ConsoleLogger($output));
-        $formatter->setProcessName($process->getName());
         return $process->run();
     }
 }

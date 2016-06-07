@@ -3,6 +3,7 @@
 namespace EtlBundle\Container;
 
 use EtlBundle\Process\ProcessAbstract;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 
 class ProcessLister
 {
@@ -13,13 +14,21 @@ class ProcessLister
         $this->processes = array();
     }
 
-    public function addProcess(ProcessAbstract $process)
+    public function addProcess($id, ProcessAbstract $process)
     {
-        $this->processes[] = $process;
+        $this->processes[$id] = $process;
     }
 
     public function getProcesses()
     {
-        print_r($this->processes);
+        return $this->processes;
+    }
+
+    public function getProcess($id)
+    {
+        if (!isset($this->processes[$id])) {
+            throw new InvalidArgumentException('No process with the id "' . $id . '" found.');
+        }
+        return $this->processes[$id];
     }
 }

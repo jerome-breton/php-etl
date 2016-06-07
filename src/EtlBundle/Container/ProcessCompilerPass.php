@@ -24,7 +24,7 @@ class ProcessCompilerPass implements CompilerPassInterface
         foreach ($taggedServices as $id => $tags) {
             $definition->addMethodCall(
                 'addProcess',
-                array(new Reference($id))
+                array($id, new Reference($id))
             );
         }
     }

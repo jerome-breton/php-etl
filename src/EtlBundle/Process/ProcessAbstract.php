@@ -11,7 +11,7 @@ class ProcessAbstract
     const RETURN_NOTRANSFORM = 2;
     const RETURN_NOLOAD = 3;
     const RETURN_NOTENOUGHLOAD = 4;
-    protected $_name = 'Unamed Process';
+
     private $_extracted = null;
     private $_transformed = null;
     private $_loaded = null;
@@ -26,21 +26,21 @@ class ProcessAbstract
     {
         $this->_logger->info('Begining extraction');
         $this->_extracted = $this->extract();
-        $this->_logger->notice('Finished extraction of {count} elements.', array('count' => $this->_extracted));
+        $this->_logger->notice('Finished extraction', array('elements' => $this->_extracted));
         if ($error = $this->validateExtraction()) {
             return $error;
         }
 
         $this->_logger->info('Begining transformation');
         $this->_transformed = $this->transform();
-        $this->_logger->notice('Finished transformation of {count} elements.', array('count' => $this->_transformed));
+        $this->_logger->notice('Finished transformation', array('elements' => $this->_transformed));
         if ($error = $this->validateTransformation()) {
             return $error;
         }
 
         $this->_logger->info('Begining loading');
         $this->_loaded = $this->load();
-        $this->_logger->notice('Finished loading of {count} elements.', array('count' => $this->_loaded));
+        $this->_logger->notice('Finished loading', array('elements' => $this->_loaded));
         if ($error = $this->validateLoading()) {
             return $error;
         }
@@ -90,22 +90,14 @@ class ProcessAbstract
             return self::RETURN_NOLOAD;
         }
         if ($this->_loaded != $this->_transformed) {
-            $this->_logger->error('{count} elements lost during loading ({loaded} loaded for {transformed} transformed).', [
-                'count' => $this->_transformed - $this->_loaded,
+            $this->_logger->error('Elements lost during loading', [
                 'loaded' => $this->_loaded,
-                'transformed' => $this->_transformed
+                'transformed' => $this->_transformed,
+                'lost' => $this->_transformed - $this->_loaded,
             ]);
             return self::RETURN_NOTENOUGHLOAD;
         }
 
         return self::RETURN_SUCCESS;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->_name;
     }
 }

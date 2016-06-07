@@ -68,3 +68,11 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+monolog:
+    handlers:
+        console:
+            type: console
+            verbosity_levels:
+                VERBOSITY_NORMAL: NOTICE
+            formatter: jbreton_php_etl.formatter
